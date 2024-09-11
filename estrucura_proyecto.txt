@@ -1,0 +1,43 @@
+/mi_app_drive
+│
+├── /config
+│   └── config.php           # Archivo de configuración de la base de datos y otras configuraciones globales.
+│
+├── /public
+│   ├── index.php            # Punto de entrada principal de la aplicación.
+│   ├── /assets
+│   │   ├── /css
+│   │   │   └── estilos.css  # Archivos CSS para el diseño de la aplicación.
+│   │   ├── /js
+│   │   │   └── scripts.js   # Archivos JavaScript para la funcionalidad del frontend.
+│   │   ├── /img
+│   │   │   └── logo.png     # Imágenes y otros recursos gráficos.
+│   │   └── /uploads
+│   │       └── ...          # Carpeta donde se almacenarán los documentos subidos por los usuarios.
+│   └── .htaccess            # Archivo para configuraciones de Apache.
+│
+├── /src
+│   ├── /controllers
+│   │   └── ControladorUsuarios.php  # Controlador para manejar la lógica de usuarios.
+│   │   └── ControladorCarpetas.php  # Controlador para manejar la lógica de carpetas.
+│   │   └── ControladorDocumentos.php  # Controlador para manejar la lógica de documentos.
+│   ├── /models
+│   │   └── Usuario.php       # Modelo para la tabla de usuarios.
+│   │   └── Carpeta.php       # Modelo para la tabla de carpetas.
+│   │   └── Documento.php     # Modelo para la tabla de documentos.
+│   ├── /views
+│   │   ├── /usuarios
+│   │   │   └── login.php     # Vista para el formulario de inicio de sesión.
+│   │   │   └── registro.php  # Vista para el formulario de registro de nuevos usuarios.
+│   │   ├── /carpetas
+│   │   │   └── listar.php    # Vista para listar carpetas.
+│   │   │   └── crear.php     # Vista para crear nuevas carpetas.
+│   │   ├── /documentos
+│   │   │   └── listar.php    # Vista para listar documentos.
+│   │   │   └── subir.php     # Vista para subir nuevos documentos.
+│   │   └── layout.php        # Archivo de layout común para las vistas.
+│   └── /helpers
+│       └── autenticacion.php # Funciones de ayuda para manejar la autenticación.
+│
+└── /logs
+    └── errores.log          # Archivo para registrar errores de la aplicación.

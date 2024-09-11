@@ -18,6 +18,10 @@
                 <i class="list-item-icon fas fa-trash text-light me-2"></i>
                 <a class="nav-link text-light p-0" href="#" id="deleteFolders">Eliminar carpeta</a>
             </li>
+            <li class="nav-item d-flex align-items-center mb-3">
+                <i class="list-item-icon fas fa-upload text-light me-2"></i>
+                <a class="nav-link text-light p-0" href="#" data-bs-toggle="modal" data-bs-target="#subirArchivoModal">Subir archivo</a>
+            </li>
         </ul>
     </div>
 </div>

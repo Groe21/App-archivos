@@ -67,10 +67,75 @@ $contenidoCarpeta = $carpetaView->mostrarContenidoCarpeta($idCarpeta);
         </div>
     </div>
 
+    <!-- Modal de Éxito de creación de una carpeta -->
+    <div class="modal fade" id="exitoModal" tabindex="-1" aria-labelledby="exitoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-success text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exitoModalLabel">¡Éxito!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    La carpeta se ha creado exitosamente.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal" aria-label="Close">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para subir un archivo -->
+<div class="modal fade" id="subirArchivoModal" tabindex="-1" aria-labelledby="subirArchivoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-info">
+            <div class="modal-header">
+                <h5 class="modal-title" id="subirArchivoModalLabel">Subir Archivo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formSubirArchivo" method="POST" action="ruta_a_tu_script_de_subida.php" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="nombreArchivo" class="form-label">Nombre del Archivo</label>
+                        <input type="text" class="form-control" id="nombreArchivo" name="nombreArchivo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="archivo" class="form-label">Seleccionar Archivo</label>
+                        <input type="file" class="form-control" id="archivo" name="archivo" required>
+                    </div>
+                    <input type="hidden" id="idCarpeta" name="idCarpeta" value="id_de_la_carpeta_actual">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" form="formSubirArchivo" class="btn btn-warning">Subir Archivo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets\js\esconderMenu.js"></script>
     <script src="assets\js\eliminarCarpeta.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Verificar si hay una variable de sesión establecida en el backend
+            <?php if (isset($_SESSION['carpeta_creada']) && $_SESSION['carpeta_creada'] === true): ?>
+                var myModal = new bootstrap.Modal(document.getElementById('exitoModal'));
+                myModal.show();
+                
+                // Limpiar la variable de sesión para que no se muestre en la próxima carga
+                <?php unset($_SESSION['carpeta_creada']); ?>
+                
+                // Añadir un evento al botón de cerrar para redirigir después de cerrar el modal
+                document.querySelector('#exitoModal .btn-close').addEventListener('click', function() {
+                    window.location.href = window.location.pathname;
+                });
+            <?php endif; ?>
+        });
+    </script>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -14,16 +14,16 @@ class CarpetaDisplay {
         $this->pdo = $pdo;
     }
 
-    // Método para obtener todas las carpetas y generar el HTML
+    // Método para obtener todas las carpetas principales y generar el HTML
     public function mostrarCarpetas() {
-        // Consultar todas las carpetas
-        $sql = "SELECT * FROM carpetas";
+        // Consultar todas las carpetas principales (sin carpeta padre)
+        $sql = "SELECT * FROM carpetas WHERE id_carpeta_padre IS NULL";
         $stmt = $this->pdo->query($sql);
         $carpetas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+
         $html = '';
-    
-        // Generar HTML para cada carpeta
+
+        // Generar HTML para cada carpeta principal
         foreach ($carpetas as $carpeta) {
             $nombre = htmlspecialchars($carpeta['nombre']);
             $idCarpeta = intval($carpeta['id']); // Asumiendo que tienes un campo 'id' en tu base de datos

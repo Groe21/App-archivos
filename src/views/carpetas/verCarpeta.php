@@ -31,19 +31,23 @@ class CarpetaView {
         $nombre = htmlspecialchars($carpeta['nombre']);
         $html = "<h2>$nombre</h2>";
 
-        // Obtener subcarpetas
-        $sql = "SELECT * FROM carpetas WHERE id_carpeta_padre = :id";
+        // Obtener subcarpetas usando la vista
+        $sql = "SELECT * FROM vista_subcarpetas WHERE id_carpeta_padre = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':id' => $idCarpeta]);
         $subcarpetas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (empty($subcarpetas)) {
-            $html .= "<p>Carpeta vacía, empiece a guardar Contenido.</p>";
+            $html .= '
+            <div class="alert text-center" role="alert">
+                <strong>¡Carpeta vacía!</strong> Empiece a guardar <em>documentos, fotos, importantes</em>.
+            </div>
+            ';
         } else {
             $html .= '<div class="row gx-2 gy-3">';
             foreach ($subcarpetas as $subcarpeta) {
-                $nombreSubcarpeta = htmlspecialchars($subcarpeta['nombre']);
-                $idSubcarpeta = intval($subcarpeta['id']);
+                $nombreSubcarpeta = htmlspecialchars($subcarpeta['nombre_carpeta']);
+                $idSubcarpeta = intval($subcarpeta['id_carpeta']);
                 $html .= '
                 <div class="col-sm-6 col-md-4 col-lg-2 custom-lg-col d-flex justify-content-center folder-item">
                     <div class="folder-container">
@@ -61,15 +65,13 @@ class CarpetaView {
             $html .= '</div>';
         }
 
-        // Aquí puedes añadir el código para mostrar los archivos dentro de la carpeta
+        // Mostrar archivos dentro de la carpeta
         $sql = "SELECT * FROM documentos WHERE id_carpeta = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':id' => $idCarpeta]);
         $archivos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if (empty($archivos)) {
-            //$html .= "<p>Carpeta vacía, empiece a guardar sus documentos.</p>";
-        } else {
+        if (!empty($archivos)) {
             $html .= '<ul>';
             foreach ($archivos as $archivo) {
                 $nombreArchivo = htmlspecialchars($archivo['nombre']);
